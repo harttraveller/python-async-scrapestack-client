@@ -22,10 +22,10 @@ async def _async_request(
                 "url": url,
             },
         ) as resp:
-            html = await resp.text()
+            data = await resp.read()
             end = perf_counter()
             elapsed = end - start
-            return html, url, resp.status, round(elapsed, 4)
+            return data, url, resp.status, round(elapsed, 4)
     except asyncio.TimeoutError:
         end = perf_counter()
         elapsed = end - start
