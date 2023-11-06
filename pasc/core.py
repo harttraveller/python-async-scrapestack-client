@@ -48,6 +48,7 @@ class Retriever:
         headers: Optional[dict] = None,
         cookies: Optional[dict] = None,
         parser: Optional[BaseModel] = None,
+        notebook: bool = False,
     ) -> None:
         self.key = key
         self.timeout = timeout
@@ -55,6 +56,7 @@ class Retriever:
         self.headers = headers
         self.cookies = cookies
         self.parser = parser
+        self.notebook = notebook
 
     def __get_default(self, urls: list[str]):
         responses, batch_time = asyncio.run(
