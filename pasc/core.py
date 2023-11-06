@@ -8,6 +8,18 @@ from pydantic import BaseModel
 class ResponseBatch(BaseModel):
     pass
 
+    @property
+    def success(self) -> None:
+        pass
+
+    @property
+    def failure(self) -> None:
+        pass
+
+    @property
+    def results(self) -> None:
+        pass
+
 
 class Retriever:
     def __init__(
