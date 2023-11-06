@@ -65,3 +65,4 @@ class Retriever:
                 timeout=self.timeout,
             )
         )
+        return responses, batch_time
