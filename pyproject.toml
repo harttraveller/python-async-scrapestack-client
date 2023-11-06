@@ -11,6 +11,7 @@ maintainers = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
 
 [tool.poetry.dependencies]
 python = ">3.9.7, <4.0"
+python-simple-secrets-manager = "^0.1.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
