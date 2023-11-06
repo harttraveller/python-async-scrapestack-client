@@ -12,6 +12,34 @@ from pssm import secrets
 from pasc.parallel import _async_batch_request
 
 
+class ResponseResult:
+    pass
+
+
+class BatchResults:
+    pass
+
+
+class BatchStatistics:
+    pass
+
+
+class ResponseBatch(BaseModel):
+    pass
+
+    @property
+    def success(self) -> None:
+        pass
+
+    @property
+    def failure(self) -> None:
+        pass
+
+    @property
+    def results(self) -> None:
+        pass
+
+
 class Retriever:
     def __init__(
         self,
@@ -67,30 +95,3 @@ if __name__ == "__main__":
     print(b)
     # * note: runs in terminal, not in notebook
     # ! RuntimeError: asyncio.run() cannot be called from a running event loop
-
-# class ResponseResult:
-#     pass
-
-
-# class BatchResults:
-#     pass
-
-
-# class BatchStatistics:
-#     pass
-
-
-# class ResponseBatch(BaseModel):
-#     pass
-
-#     @property
-#     def success(self) -> None:
-#         pass
-
-#     @property
-#     def failure(self) -> None:
-#         pass
-
-#     @property
-#     def results(self) -> None:
-#         pass
