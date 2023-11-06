@@ -26,7 +26,7 @@ def detect_response_data_format(response_text: str) -> str:
 
 
 class ResponseResult(BaseModel):
-    html: str
+    raw: bytes
     url: str
     status: int
 
