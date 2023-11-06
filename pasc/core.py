@@ -3,7 +3,7 @@
 # external imports
 
 import asyncio
-from typing import Optional
+from typing import Optional, Any
 from pydantic import BaseModel
 from pssm import secrets
 
@@ -27,7 +27,8 @@ def detect_response_data_format(response_text: str) -> str:
 
 class ResponseData(BaseModel):
     raw: bytes
-    ext: str
+    ext: str  # todo: must be in valid
+    parsed: Any  # todo: finish other packages for data format parsing
 
 
 class ResponseResult(BaseModel):
