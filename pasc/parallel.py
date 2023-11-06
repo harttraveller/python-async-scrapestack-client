@@ -2,6 +2,8 @@ import asyncio
 from time import perf_counter
 from datetime import datetime
 from aiohttp import ClientSession, ClientTimeout
+from typing import Optional
+
 from pasc.util import compute_timedelta_seconds
 from pasc.env import SCRAPESTACK_URL
 
@@ -32,9 +34,10 @@ async def _async_request(
 
 async def _async_batch_request(
     urls: list[str],
-    headers: dict = None,
-    cookies: dict = None,
-    timeout: int = 100,
+    key: str,
+    headers: Optional[dict] = None,
+    cookies: Optional[dict] = None,
+    timeout: Optional[int] = 100,
 ) -> list:
     batch_start_time = datetime.now()
     async with ClientSession(
@@ -42,7 +45,9 @@ async def _async_batch_request(
     ) as session:
         tasks = []
         for url in urls:
-            tasks.append(asyncio.ensure_future(_async_request(session, url)))
+            tasks.append(
+                asyncio.ensure_future(_async_request(session=session, url=url, key=key))
+            )
         results = await asyncio.gather(*tasks)
     batch_end_time = datetime.now()
     return results, compute_timedelta_seconds(start=batch_start_time, end=batch_end_time)
