@@ -19,3 +19,6 @@ class Retriever:
         cookies: Optional[dict] = None,
     ) -> None:
         self.token = token
+
+    def get(self, urls: list[str]) -> ResponseBatch:
+        pass
