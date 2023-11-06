@@ -56,7 +56,7 @@ class Retriever:
         self.cookies = cookies
         self.parser = parser
 
-    def get(self, urls: list[str]) -> ResponseBatch:
+    def __get_default(self, urls: list[str]):
         responses, batch_time = asyncio.run(
             parallel._async_batch_request(
                 urls=urls,
@@ -68,9 +68,32 @@ class Retriever:
         )
         return responses, batch_time
 
+    def __get_notebook(self, urls: list[str]):
+        loop = asyncio.get_event_loop()
+        responses, batch_time = loop.run_until_complete(
+            asyncio.run(
+                parallel._async_batch_request(
+                    urls=urls,
+                    key=self.key,
+                    headers=self.headers,
+                    cookies=self.cookies,
+                    timeout=self.timeout,
+                )
+            )
+        )
+        return responses, batch_time
+
+    def get(self, urls: list[str]):
+        if self.notebook:
+            return self.__get_notebook(urls=urls)
+        else:
+            return self.__get_default(urls=urls)
+
 
 if __name__ == "__main__":
     ret = Retriever()
     a, b = ret.get(["https://www.duckduckgo.com"] * 10)
     print(a)
     print(b)
+    # * note: runs in terminal, not in notebook
+    # ! RuntimeError: asyncio.run() cannot be called from a running event loop
