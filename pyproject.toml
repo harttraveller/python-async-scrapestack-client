@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "python-async-scrapestack-client"
+packages = [{ include = "pasc" }]
+version = "0.1.0"
+description = "An asynchronous client for web scraping using scrapestack."
+readme = "README.md"
+repository = "https://github.com/harttraveller/pasc"
+documentation = "https://harttraveller.com/pasc"
+authors = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
+maintainers = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
+
+[tool.poetry.dependencies]
+python = ">3.9.7, <4.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.4.8"
+mkdocs-jupyter = "^0.24.6"
+mkdocs-roamlinks-plugin = "^0.3.2"
+mkdocs-git-revision-date-localized-plugin = "^1.2.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# [tool.poetry.scripts]
+# pasc = "pasc.cli:entry"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
