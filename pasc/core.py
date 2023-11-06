@@ -5,12 +5,13 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 from aiohttp import ClientSession, ClientTimeout
+from pasc.util import compute_timedelta_seconds
 from pasc.env import SCRAPESTACK_URL
 
 # from pydantic.dataclasses import dataclass
 
 
-async def fetch(session: ClientSession, url: str, key: str):
+async def _async_request(session: ClientSession, url: str, key: str):
     start = perf_counter()
     try:
         async with session.get(
@@ -30,7 +31,7 @@ async def fetch(session: ClientSession, url: str, key: str):
         return None, url, 408, round(elapsed, 4)
 
 
-async def batch(
+async def _async_batch_request(
     urls: list[str],
     headers: dict = None,
     cookies: dict = None,
@@ -42,17 +43,10 @@ async def batch(
     ) as session:
         tasks = []
         for url in urls:
-            tasks.append(asyncio.ensure_future(fetch(session, url)))
+            tasks.append(asyncio.ensure_future(_async_request(session, url)))
         results = await asyncio.gather(*tasks)
     batch_end_time = datetime.now()
     return results, compute_timedelta_seconds(start=batch_start_time, end=batch_end_time)
-
-
-def compute_timedelta_seconds(start: datetime, end: datetime) -> float:
-    "computes the timedelta in seconds between end and start"
-    elapsed_timedelta = end - start
-    elapsed = elapsed_timedelta.seconds + (elapsed_timedelta.microseconds / 1e6)
-    return elapsed
 
 
 class ResponseBatch(BaseModel):
