@@ -94,7 +94,6 @@ class Retriever:
         return responses, batch_time
 
     async def __get_notebook(self, urls: list[str]):
-        loop = asyncio.get_event_loop()
         responses, batch_time = await _async_batch_request(
             urls=urls,
             key=self.key,
@@ -104,9 +103,9 @@ class Retriever:
         )
         return responses, batch_time
 
-    async def get(self, urls: list[str]):
+    def get(self, urls: list[str]):
         if self.notebook:
-            return await self.__get_notebook(urls=urls)
+            return self.__get_notebook(urls=urls)
         else:
             return self.__get_default(urls=urls)
 
