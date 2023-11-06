@@ -1,8 +1,8 @@
 import asyncio
+from typing import Optional
 from time import perf_counter
 from datetime import datetime
 from aiohttp import ClientSession, ClientTimeout
-from typing import Optional
 
 from pasc.util import compute_timedelta_seconds
 from pasc.env import SCRAPESTACK_URL
