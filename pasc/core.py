@@ -25,10 +25,16 @@ def detect_response_data_format(response_text: str) -> str:
     pass
 
 
-class ResponseResult(BaseModel):
+class ResponseData(BaseModel):
     raw: bytes
+    ext: str
+
+
+class ResponseResult(BaseModel):
     url: str
-    status: int
+    status_code: int
+    status_info: str
+    data: Optional[ResponseData] = None
 
 
 class BatchResults:
