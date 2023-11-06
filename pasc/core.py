@@ -11,6 +11,18 @@ from pasc import parallel
 # from pydantic.dataclasses import dataclass
 
 
+class ResponseResult:
+    pass
+
+
+class BatchResults:
+    pass
+
+
+class BatchStatistics:
+    pass
+
+
 class ResponseBatch(BaseModel):
     pass
 
