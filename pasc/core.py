@@ -11,7 +11,11 @@ from pasc.env import SCRAPESTACK_URL
 # from pydantic.dataclasses import dataclass
 
 
-async def _async_request(session: ClientSession, url: str, key: str):
+async def _async_request(
+    session: ClientSession,
+    url: str,
+    key: str,
+):
     start = perf_counter()
     try:
         async with session.get(
