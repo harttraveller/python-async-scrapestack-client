@@ -11,9 +11,24 @@ from pssm import secrets
 # internal imports
 from pasc.parallel import _async_batch_request
 
+# todo: add more return detection types
+# * should use pyeio, which should in turn use pufi...
+VALID_RESPONSE_DATA_FORMATS = {
+    "html",
+    "txt",
+    "json",
+    "csv",
+}
 
-class ResponseResult:
+
+def detect_response_data_format(response_text: str) -> str:
     pass
+
+
+class ResponseResult(BaseModel):
+    html: str
+    url: str
+    status: int
 
 
 class BatchResults:
