@@ -83,7 +83,7 @@ class Retriever:
 
     def __get_default(self, urls: list[str]):
         responses, batch_time = asyncio.run(
-            parallel._async_batch_request(
+            _async_batch_request(
                 urls=urls,
                 key=self.key,
                 headers=self.headers,
@@ -97,7 +97,7 @@ class Retriever:
         loop = asyncio.get_event_loop()
         responses, batch_time = loop.run_until_complete(
             asyncio.run(
-                parallel._async_batch_request(
+                _async_batch_request(
                     urls=urls,
                     key=self.key,
                     headers=self.headers,
