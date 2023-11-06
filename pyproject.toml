@@ -13,6 +13,7 @@ maintainers = ["Hart Traveller <ruling_fiction.0b@icloud.com>"]
 python = ">3.9.7, <4.0"
 python-simple-secrets-manager = "^0.1.1"
 aiohttp = "^3.8.6"
+beautifulsoup4 = "^4.12.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
