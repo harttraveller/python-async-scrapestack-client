@@ -95,8 +95,8 @@ class Retriever:
 
     def __get_notebook(self, urls: list[str]):
         loop = asyncio.get_event_loop()
-        responses, batch_time = loop.run_until_complete(
-            asyncio.run(
+        if loop.is_running():
+            responses, batch_time = loop.create_task(
                 _async_batch_request(
                     urls=urls,
                     key=self.key,
@@ -105,7 +105,16 @@ class Retriever:
                     timeout=self.timeout,
                 )
             )
-        )
+        else:
+            responses, batch_time = loop.run_until_complete(
+                _async_batch_request(
+                    urls=urls,
+                    key=self.key,
+                    headers=self.headers,
+                    cookies=self.cookies,
+                    timeout=self.timeout,
+                )
+            )
         return responses, batch_time
 
     def get(self, urls: list[str]):
