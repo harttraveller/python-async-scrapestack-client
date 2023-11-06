@@ -1,7 +1,8 @@
-from pssm import secrets
+import asyncio
 from typing import Optional
 from pydantic import BaseModel
-
+from pssm import secrets
+from pasc import parallel
 
 # from pydantic.dataclasses import dataclass
 
@@ -33,6 +34,19 @@ class Retriever:
         parser: Optional[BaseModel] = None,
     ) -> None:
         self.key = key
+        self.timeout = timeout
+        self.verbose = verbose
+        self.headers = headers
+        self.cookies = cookies
+        self.parser = parser
 
     def get(self, urls: list[str]) -> ResponseBatch:
         pass
+        # responses, batch_time = asyncio.run(
+        #     parallel._async_batch_request(
+        #         urls=event["urls"],
+        #         headers=settings["headers"],
+        #         cookies=settings["cookies"],
+        #         timeout=settings["timeout"],
+        #     )
+        # )
