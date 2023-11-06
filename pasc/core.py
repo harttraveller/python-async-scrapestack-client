@@ -1,6 +1,7 @@
 from pssm import secrets
 from typing import Optional
 from pydantic import BaseModel
+from pasc.env import SCRAPESTACK_URL
 
 # from pydantic.dataclasses import dataclass
 
