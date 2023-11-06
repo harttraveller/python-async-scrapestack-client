@@ -2,6 +2,12 @@ from pssm import secrets
 from typing import Optional
 from pydantic import BaseModel
 
+# from pydantic.dataclasses import dataclass
+
+
+class ResponseBatch(BaseModel):
+    pass
+
 
 class Retriever:
     def __init__(
