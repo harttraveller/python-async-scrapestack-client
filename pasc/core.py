@@ -10,7 +10,6 @@ from pasc.parallel import _async_batch_request
 class ResponseData(BaseModel):
     raw: bytes
     ext: str  # todo: must be in valid
-    parsed: Any  # todo: finish other packages for data format parsing
 
 
 class ResponseResult(BaseModel):
