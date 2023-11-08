@@ -2,6 +2,9 @@
 
 *If you need to use this but are confused by the docs, then submit an issue and I will create formal docs. Right now this functions as a dependency for personal projects.*
 
+## links
+
+- [PyPi](https://pypi.org/project/python-async-scrapestack-client/)
 
 ## description
 
