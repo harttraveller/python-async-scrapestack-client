@@ -14,21 +14,10 @@ python-simple-secrets-manager = "^0.1.1"
 aiohttp = "^3.8.6"
 beautifulsoup4 = "^4.12.2"
 
-[tool.poetry.group.test.dependencies]
-pytest = "^7.4.3"
-
-[tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.4.8"
-mkdocs-jupyter = "^0.24.6"
-mkdocs-roamlinks-plugin = "^0.3.2"
-mkdocs-git-revision-date-localized-plugin = "^1.2.1"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-# [tool.poetry.scripts]
-# pasc = "pasc.cli:entry"
 
 [[tool.poetry.source]]
 name = "PyPI"
