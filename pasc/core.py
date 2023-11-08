@@ -14,12 +14,8 @@ class ResponseResult(BaseModel):
     data: Optional[bytes] = None
 
 
-class BatchStatistics:
-    pass
-
-
-class ResponseBatch(BaseModel):
-    items: list[ResponseResult]
+class Batch(BaseModel):
+    responses: list[ResponseResult]
     time: float
 
     @property
