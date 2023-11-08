@@ -1,21 +1,30 @@
+from __future__ import annotations
+
 # from pydantic.dataclasses import dataclass
 import asyncio
-from typing import Optional, Any
+from typing import Optional, Any, Union
 from pydantic import BaseModel
 from pssm import secrets
 
 from pasc.parallel import _async_batch_request
 
 
-class ResponseResult(BaseModel):
+class Response(BaseModel):
     url: str
     status_code: int
     status_info: str
+    time: float
     data: Optional[bytes] = None
+
+    @staticmethod
+    def parse(
+        url: str, status_code: int, time: float, data: Optional[bytes] = None
+    ) -> Response:
+        pass
 
 
 class Batch(BaseModel):
-    responses: list[ResponseResult]
+    responses: list[Response]
     time: float
 
     @property
@@ -35,11 +44,11 @@ class Batch(BaseModel):
         pass
 
     @property
-    def success(self) -> list[ResponseResult]:
+    def success(self) -> list[Response]:
         pass
 
     @property
-    def failure(self) -> list[ResponseResult]:
+    def failure(self) -> list[Response]:
         pass
 
 
@@ -83,6 +92,14 @@ class Retriever:
             timeout=self.timeout,
         )
         return responses, batch_time
+
+    def __parse_responses(
+        self,
+        responses: list[tuple[Union[str, int, bytes, None]]],
+        batch_time: float,
+    ) -> Batch:
+        pass
+        # responses =
 
     def fetch(self, urls: list[str]):
         if self.notebook:
