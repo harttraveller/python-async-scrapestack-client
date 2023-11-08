@@ -40,7 +40,7 @@ batch = retriever.fetch(["https://www.duckduckgo.com"] * 10)
 access results
 
 ```py
-# from pasc import Response # * type import, note required
+# from pasc import Response # * type import, not required
 
 response: Response = batch.item[0]
 
