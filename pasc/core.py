@@ -14,24 +14,28 @@ class ResponseResult(BaseModel):
     data: Optional[bytes] = None
 
 
-class BatchResults:
-    pass
-
-
 class BatchStatistics:
     pass
 
 
 class ResponseBatch(BaseModel):
-    results: list[ResponseResult]
+    items: list[ResponseResult]
     time: float
 
     @property
-    def percent_success(self) -> float:
+    def success_percent(self) -> float:
         pass
 
     @property
-    def percent_failure(self) -> float:
+    def failure_percent(self) -> float:
+        pass
+
+    @property
+    def success_count(self) -> int:
+        pass
+
+    @property
+    def failure_count(self) -> int:
         pass
 
     @property
