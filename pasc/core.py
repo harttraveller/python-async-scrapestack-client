@@ -60,6 +60,7 @@ class Batch(BaseModel):
 
     @property
     def synchronous_time(self) -> float:
+        "returns what the synchronous time would have been otherwise (does not account for scrapestack proxy lag)"
         return sum([r.time for r in self.responses])
 
 
