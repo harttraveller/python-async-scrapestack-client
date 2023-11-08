@@ -58,6 +58,10 @@ class Batch(BaseModel):
     def failure(self) -> list[Response]:
         pass
 
+    @property
+    def synchronous_time(self) -> float:
+        return sum([r.time for r in self.responses])
+
 
 class Retriever:
     def __init__(
@@ -106,7 +110,11 @@ class Retriever:
         batch_time: float,
     ) -> Batch:
         pass
-        # responses =
+        response_list = [
+            Response.parse(url=r[1], status_code=r[2], time=r[3], data=r[0])
+            for r in responses
+        ]
+        return Batch(responses=response_list, time=batch_time)
 
     def fetch(self, urls: list[str]):
         if self.notebook:
