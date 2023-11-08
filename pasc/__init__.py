@@ -228,8 +228,8 @@ class Retriever:
 
 
 if __name__ == "__main__":
-    ret = Retriever()
-    a, b = ret.fetch(["https://www.duckduckgo.com"] * 10)
+    retriever = Retriever()
+    a, b = retriever.fetch(["https://www.duckduckgo.com"] * 10)
     print(a)
     print(b)
     # * note: runs in terminal, not in notebook
