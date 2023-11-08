@@ -70,16 +70,17 @@ def compute_timedelta_seconds(start: datetime, end: datetime) -> float:
 
 class Response(BaseModel):
     url: str
-    code: int
-    info: str
+    status: int
+    detail: str
+    success: bool
     time: float
     data: Optional[bytes] = None
 
     def __str__(self) -> str:
-        return f"Response(url={self.url}, code={self.code}, time={self.time})"
+        return f"Response(url={self.url}, code={self.status}, time={self.time})"
 
     def __repr__(self) -> str:
-        return f"Response(url={self.url}, code={self.code}, time={self.time})"
+        return f"Response(url={self.url}, code={self.status}, time={self.time})"
 
     @staticmethod
     def parse(
@@ -87,8 +88,9 @@ class Response(BaseModel):
     ) -> Response:
         return Response(
             url=url,
-            code=status_code,
-            info=RESPONSES[status_code],
+            status=status_code,
+            detail=RESPONSES[status_code],
+            success=bool(status_code == 200),
             time=time,
             data=data,
         )
@@ -204,7 +206,17 @@ class Retriever:
         return Batch(item=response_list, time=batch_time)
 
     def fetch(self, urls: list[str]):
-        responses, batch_time = asyncio.run(
+        # responses, batch_time = asyncio.run(
+        #     _async_batch_request(
+        #         urls=urls,
+        #         key=self.key,
+        #         headers=self.headers,
+        #         cookies=self.cookies,
+        #         timeout=self.timeout,
+        #     )
+        # )
+        loop = asyncio.get_event_loop()
+        responses, batch_time = loop.run_until_complete(
             _async_batch_request(
                 urls=urls,
                 key=self.key,
