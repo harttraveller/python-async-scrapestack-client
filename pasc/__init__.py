@@ -102,16 +102,16 @@ class Batch(BaseModel):
     time: float
 
     @property
-    def __len__(self) -> int:
+    def n(self) -> int:
         return len(self.item)
 
     @property
     def success_percent(self) -> float:
-        return self.success_count / len(self)
+        return self.success_count / self.n
 
     @property
     def failure_percent(self) -> float:
-        return self.failure_count / len(self)
+        return self.failure_count / self.n
 
     @property
     def success_count(self) -> int:
