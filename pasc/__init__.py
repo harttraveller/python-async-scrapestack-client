@@ -240,6 +240,7 @@ class Retriever:
 if __name__ == "__main__":
     retriever = Retriever()
     batch = retriever.fetch(["https://www.duckduckgo.com"] * 10)
-    pprint(batch)
-    pprint(batch.success_percent)
-    pprint(batch.approx_speedup)
+    # pprint(batch)
+    # pprint(batch.success_percent)
+    # pprint(batch.approx_speedup)
+    pprint(batch.item[0].data.decode("utf8"))
