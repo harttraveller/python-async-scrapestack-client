@@ -184,7 +184,6 @@ class Retriever:
         verbose: bool = False,
         headers: Optional[dict] = None,
         cookies: Optional[dict] = None,
-        parser: Optional[BaseModel] = None,
         notebook: bool = False,
     ) -> None:
         self.key = key
@@ -192,7 +191,6 @@ class Retriever:
         self.verbose = verbose
         self.headers = headers
         self.cookies = cookies
-        self.parser = parser
         self.notebook = notebook
 
     def __parse_responses(
