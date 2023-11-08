@@ -209,7 +209,7 @@ class Retriever:
             cookies=self.cookies,
             timeout=self.timeout,
         )
-        return responses, batch_time
+        return await responses, batch_time
 
     def __parse_responses(
         self,
