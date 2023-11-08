@@ -7,16 +7,11 @@ from pssm import secrets
 from pasc.parallel import _async_batch_request
 
 
-class ResponseData(BaseModel):
-    raw: bytes
-    ext: str  # todo: must be in valid
-
-
 class ResponseResult(BaseModel):
     url: str
     status_code: int
     status_info: str
-    data: Optional[ResponseData] = None
+    data: Optional[bytes] = None
 
 
 class BatchResults:
