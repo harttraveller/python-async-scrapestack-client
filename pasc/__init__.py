@@ -184,14 +184,12 @@ class Retriever:
         verbose: bool = False,
         headers: Optional[dict] = None,
         cookies: Optional[dict] = None,
-        notebook: bool = False,
     ) -> None:
         self.key = key
         self.timeout = timeout
         self.verbose = verbose
         self.headers = headers
         self.cookies = cookies
-        self.notebook = notebook
 
     def __parse_responses(
         self,
@@ -205,25 +203,16 @@ class Retriever:
         ]
         return Batch(item=response_list, time=batch_time)
 
-    async def fetch(self, urls: list[str]):
-        if self.notebook:
-            responses, batch_time = await _async_batch_request(
+    def fetch(self, urls: list[str]):
+        responses, batch_time = asyncio.run(
+            _async_batch_request(
                 urls=urls,
                 key=self.key,
                 headers=self.headers,
                 cookies=self.cookies,
                 timeout=self.timeout,
             )
-        else:
-            responses, batch_time = asyncio.run(
-                _async_batch_request(
-                    urls=urls,
-                    key=self.key,
-                    headers=self.headers,
-                    cookies=self.cookies,
-                    timeout=self.timeout,
-                )
-            )
+        )
         return self.__parse_responses(responses=responses, batch_time=batch_time)
 
 
