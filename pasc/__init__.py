@@ -70,10 +70,16 @@ def compute_timedelta_seconds(start: datetime, end: datetime) -> float:
 
 class Response(BaseModel):
     url: str
-    status_code: int
-    status_info: str
+    code: int
+    info: str
     time: float
     data: Optional[bytes] = None
+
+    def __str__(self) -> str:
+        return f"Response(url={self.url}, code={self.code}, time={self.time})"
+
+    def __repr__(self) -> str:
+        return f"Response(url={self.url}, code={self.code}, time={self.time})"
 
     @staticmethod
     def parse(
@@ -81,15 +87,15 @@ class Response(BaseModel):
     ) -> Response:
         return Response(
             url=url,
-            status_code=status_code,
-            status_info=RESPONSES[status_code],
+            code=status_code,
+            info=RESPONSES[status_code],
             time=time,
             data=data,
         )
 
 
 class Batch(BaseModel):
-    responses: list[Response]
+    item: list[Response]
     time: float
 
     @property
@@ -119,7 +125,7 @@ class Batch(BaseModel):
     @property
     def synchronous_time(self) -> float:
         "returns what the synchronous time would have been otherwise (does not account for scrapestack proxy lag)"
-        return sum([r.time for r in self.responses])
+        return sum([r.time for r in self.item])
 
 
 # * async functions
@@ -189,28 +195,6 @@ class Retriever:
         self.parser = parser
         self.notebook = notebook
 
-    def __get_default(self, urls: list[str]):
-        responses, batch_time = asyncio.run(
-            _async_batch_request(
-                urls=urls,
-                key=self.key,
-                headers=self.headers,
-                cookies=self.cookies,
-                timeout=self.timeout,
-            )
-        )
-        return responses, batch_time
-
-    async def __get_notebook(self, urls: list[str]):
-        responses, batch_time = await _async_batch_request(
-            urls=urls,
-            key=self.key,
-            headers=self.headers,
-            cookies=self.cookies,
-            timeout=self.timeout,
-        )
-        return await responses, batch_time
-
     def __parse_responses(
         self,
         responses: list[tuple[Union[str, int, bytes, None]]],
@@ -221,13 +205,27 @@ class Retriever:
             Response.parse(url=r[1], status_code=r[2], time=r[3], data=r[0])
             for r in responses
         ]
-        return Batch(responses=response_list, time=batch_time)
+        return Batch(item=response_list, time=batch_time)
 
-    def fetch(self, urls: list[str]):
+    async def fetch(self, urls: list[str]):
         if self.notebook:
-            responses, batch_time = self.__get_notebook(urls=urls)
+            responses, batch_time = await _async_batch_request(
+                urls=urls,
+                key=self.key,
+                headers=self.headers,
+                cookies=self.cookies,
+                timeout=self.timeout,
+            )
         else:
-            responses, batch_time = self.__get_default(urls=urls)
+            responses, batch_time = asyncio.run(
+                _async_batch_request(
+                    urls=urls,
+                    key=self.key,
+                    headers=self.headers,
+                    cookies=self.cookies,
+                    timeout=self.timeout,
+                )
+            )
         return self.__parse_responses(responses=responses, batch_time=batch_time)
 
 
