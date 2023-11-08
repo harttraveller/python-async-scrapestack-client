@@ -11,15 +11,6 @@ from pssm import secrets
 # internal imports
 from pasc.parallel import _async_batch_request
 
-# todo: add more return detection types
-# * should use pyeio, which should in turn use pufi...
-VALID_RESPONSE_DATA_FORMATS = {
-    "html",
-    "txt",
-    "json",
-    "csv",
-}
-
 
 def detect_response_data_format(response_text: str) -> str:
     pass
@@ -103,16 +94,17 @@ class Retriever:
         )
         return responses, batch_time
 
-    def get(self, urls: list[str]):
+    def fetch(self, urls: list[str]):
         if self.notebook:
-            return self.__get_notebook(urls=urls)
+            responses, batch_time = self.__get_notebook(urls=urls)
         else:
-            return self.__get_default(urls=urls)
+            responses, batch_time = self.__get_default(urls=urls)
+        return responses, batch_time
 
 
 if __name__ == "__main__":
     ret = Retriever()
-    a, b = ret.get(["https://www.duckduckgo.com"] * 10)
+    a, b = ret.fetch(["https://www.duckduckgo.com"] * 10)
     print(a)
     print(b)
     # * note: runs in terminal, not in notebook
