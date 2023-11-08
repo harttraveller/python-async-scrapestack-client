@@ -1,19 +1,10 @@
 # from pydantic.dataclasses import dataclass
-
-# external imports
-
 import asyncio
 from typing import Optional, Any
 from pydantic import BaseModel
 from pssm import secrets
 
-
-# internal imports
 from pasc.parallel import _async_batch_request
-
-
-def detect_response_data_format(response_text: str) -> str:
-    pass
 
 
 class ResponseData(BaseModel):
