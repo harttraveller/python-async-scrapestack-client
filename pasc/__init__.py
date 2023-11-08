@@ -101,28 +101,36 @@ class Batch(BaseModel):
     time: float
 
     @property
+    def __len__(self) -> int:
+        return len(self.item)
+
+    @property
     def success_percent(self) -> float:
-        pass
+        return self.success_count / len(self)
 
     @property
     def failure_percent(self) -> float:
-        pass
+        return self.failure_count / len(self)
 
     @property
     def success_count(self) -> int:
-        pass
+        return sum([1 if resp.success else 0 for resp in self.item])
 
     @property
     def failure_count(self) -> int:
-        pass
+        return sum([1 if not resp.success else 0 for resp in self.item])
 
     @property
     def success(self) -> list[Response]:
-        pass
+        return [resp for resp in self.item if resp.success]
 
     @property
     def failure(self) -> list[Response]:
-        pass
+        return [resp for resp in self.item if not resp.success]
+
+    @property
+    def approx_speedup(self) -> float:
+        return self.sequential_time / self.time
 
     @property
     def sequential_time(self) -> float:
