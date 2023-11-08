@@ -122,7 +122,7 @@ class Retriever:
             responses, batch_time = self.__get_notebook(urls=urls)
         else:
             responses, batch_time = self.__get_default(urls=urls)
-        return responses, batch_time
+        return self.__parse_responses(resposnes=responses, batch_time=batch_time)
 
 
 if __name__ == "__main__":
