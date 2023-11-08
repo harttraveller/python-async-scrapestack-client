@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from pssm import secrets
 
 from pasc.parallel import _async_batch_request
+from pasc.env import RESPONSES
 
 
 class Response(BaseModel):
@@ -20,7 +21,13 @@ class Response(BaseModel):
     def parse(
         url: str, status_code: int, time: float, data: Optional[bytes] = None
     ) -> Response:
-        pass
+        return Response(
+            url=url,
+            status_code=status_code,
+            status_info=RESPONSES[status_code],
+            time=time,
+            data=data,
+        )
 
 
 class Batch(BaseModel):
