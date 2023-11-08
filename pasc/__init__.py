@@ -229,8 +229,7 @@ class Retriever:
 
 if __name__ == "__main__":
     retriever = Retriever()
-    a, b = retriever.fetch(["https://www.duckduckgo.com"] * 10)
-    print(a)
-    print(b)
+    batch = retriever.fetch(["https://www.duckduckgo.com"] * 10)
+    print(batch)
     # * note: runs in terminal, not in notebook
     # ! RuntimeError: asyncio.run() cannot be called from a running event loop
